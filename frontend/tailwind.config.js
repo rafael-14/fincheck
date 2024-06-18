@@ -109,7 +109,7 @@ export default {
         },
 
         teal: {
-          50: "#E6FCF5",
+          0: "#E6FCF5",
           100: "#C3FAE8",
           200: "#96F2D7",
           300: "#63E6BE",
