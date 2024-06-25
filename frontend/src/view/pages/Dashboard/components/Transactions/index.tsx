@@ -1,4 +1,3 @@
-import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { MONTHS } from "../../../../../app/config/constants";
 import cn from "../../../../../app/utils/cn";
@@ -6,15 +5,23 @@ import formatCurrency from "../../../../../app/utils/formatCurrency";
 import emptyStateImage from "../../../../../assets/empty-state.svg";
 import Spinner from "../../../../components/Spinner";
 import { FilterIcon } from "../../../../components/icons/FilterIcon";
-import { TransactionsIcon } from "../../../../components/icons/TransactionsIcon";
 import { CategoryIcon } from "../../../../components/icons/categories/CategoryIcon";
+import FiltersModal from "./FiltersModal";
 import SliderNavigation from "./SliderNavigation";
 import SliderOption from "./SliderOption";
+import TransactionTypeDropdown from "./TransactionTypeDropdown";
 import useTransactionsController from "./useTransactionsController";
 
 export default function Transactions() {
-  const { areValuesVisible, isInitialLoading, transactions, isLoading } =
-    useTransactionsController();
+  const {
+    areValuesVisible,
+    isInitialLoading,
+    transactions,
+    isLoading,
+    isFiltersModalOpen,
+    handleOpenFiltersModal,
+    handleCloseFiltersModal,
+  } = useTransactionsController();
   return (
     <div className="bg-gray-100 rounded-2xl w-full h-full px-4 py-8 md:p-10 flex flex-col">
       {isInitialLoading && (
@@ -25,17 +32,16 @@ export default function Transactions() {
 
       {!isInitialLoading && (
         <>
+          <FiltersModal
+            open={isFiltersModalOpen}
+            onClose={handleCloseFiltersModal}
+          />
+
           <header className="mb-4">
             <div className="flex justify-between items-center">
-              <button className="flex items-center gap-2">
-                <TransactionsIcon />
-                <span className="text-sm text-gray-800 tracking-[-0.5px] font-medium">
-                  Transações
-                </span>
-                <ChevronDownIcon className="text-gray-900" />
-              </button>
+              <TransactionTypeDropdown />
 
-              <button>
+              <button onClick={handleOpenFiltersModal}>
                 <FilterIcon />
               </button>
             </div>
